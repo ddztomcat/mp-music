@@ -1,0 +1,13 @@
+{
+  "name": "mp-music",
+  "version": "1.0.0",
+  "description": "A Mpvue project",
+  "author": "ddz <ddzTomCat@gmail.com>",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "axios": "^0.16.1",
+    "express": "^4.14.1"
+  }
+}
