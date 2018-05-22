@@ -1,5 +1,5 @@
 <template>
-  <scroll-view scroll-y class="suggest-list">
+  <scroll-view scroll-y class="suggest-list" @scrolltolower="searchMore">
       <li @click="selectItem(item)" class="suggest-item" v-for="(item,index) in result" :key="index">
         <div class="icon">
           <i :class="item.type === TYPE_SINGER ? 'icon-mine' : 'icon-music'"></i>
@@ -8,7 +8,7 @@
           <temp-text :answer='item'></temp-text>
         </div>
       </li>
-      <!-- <loading v-if="hasMore" title=""></loading> -->
+      <loading v-if="hasMore" title=""></loading>
       <div v-if="!hasMore && !result.length" class="no-result-wrapper">
         <no-result title="抱歉，暂无搜索结果"></no-result>
       </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  // import Loading from 'base/loading/loading'
+  import Loading from 'base/loading/loading'
   // import NoResult from 'base/no-result/no-result'
   import {search} from 'api/search'
   import {ERR_OK} from 'api/config'
@@ -96,6 +96,7 @@
             url: '/pages/player/main'
           })
         }
+        console.log(1)
         this.$emit('select', item)
       },
       getDisplayName (item) {
@@ -139,13 +140,13 @@
     },
     watch: {
       query (newQuery) {
-        console.log('sear56ch')
+        console.log(6)
         this.search(newQuery)
       }
     },
     components: {
-      TempText
-      // Loading,
+      TempText,
+      Loading
       // NoResult
     }
   }

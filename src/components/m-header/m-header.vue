@@ -2,14 +2,22 @@
   <div class="m-header">
     <div class="icon"></div>
     <h1 class="text">Chicken Music</h1>
-    <router-link tag="div" class="mine" to="/user">
+    <div class="mine" @click='handleClick'>
       <i class="icon-mine"></i>
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    methods: {
+      handleClick () {
+        wx.navigateTo({
+          url: '/pages/user-center/main'
+        })
+      }
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -39,7 +47,7 @@
     .mine
       position: absolute
       top: 0
-      right: 0
+      right: 10px
       .icon-mine
         display: block
         padding: 12px

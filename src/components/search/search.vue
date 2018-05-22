@@ -24,7 +24,7 @@
           </div>
       </scroll-view>
     </div>
-    <div class="search-result" v-if="query" ref="searchResult">
+    <div class="search-result"  ref="searchResult" :style="{display:query ? 'block' : 'none'}">
       <suggest @listScroll="blurInput" @select="saveSearch" ref="suggest" :query="query"></suggest>
     </div>
     <confirm ref="confirm" @confirm="clearSearchHistory" text="是否清空所有搜索历史" confirmBtnText="清空"></confirm>
@@ -67,7 +67,6 @@
         this.$refs.shortcut.refresh()
       },
       showConfirm () {
-        console.log(34334)
         this.$refs.confirm.show()
       },
       _getHotKey () {
@@ -78,12 +77,17 @@
         })
       },
       ...mapActions([
-        'clearSearchHistory'
+        'clearSearchHistory',
+        'saveSearchHistory'
       ])
     },
     watch: {
       query (newQuery) {
         console.log(newQuery)
+        if (newQuery) {
+          this.saveSearchHistory(newQuery)
+        }
+        // console.log(this.$refs.suggest)
         // console.log(34435435)
         // if (!newQuery) {
         //   setTimeout(() => {

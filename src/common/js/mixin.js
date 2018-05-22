@@ -104,14 +104,14 @@ export const searchMixin = {
   },
   methods: {
     onQueryChange (query) {
-      console.log('QUERY CHANGE')
+      console.log(5)
       this.query = query
     },
     blurInput () {
       this.$refs.searchBox.blur()
     },
     addQuery (query) {
-      console.log('query')
+      console.log(2)
       this.$refs.searchBox.setQuery(query)
     },
     saveSearch () {

@@ -1,6 +1,6 @@
 <template>
   <div class="loading">
-    <img width="24" height="24" src="./loading.gif">
+    <div class="img-wrapper"></div>
     <p class="desc">{{title}}</p>
   </div>
 </template>
@@ -16,10 +16,16 @@
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-
+  @import "~common/stylus/mixin"
   .loading
     width: 100%
     text-align: center
+    .img-wrapper
+      display:inline-block;
+      width:24px;
+      height:24px;
+      background-size:100%;
+      background-image:url('./loading.gif')
     .desc
       line-height: 20px
       font-size: $font-size-small

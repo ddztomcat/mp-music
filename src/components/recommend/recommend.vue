@@ -1,5 +1,5 @@
 <template>
-    <div class="recommend">
+    <scroll-view scroll-y class="recommend">
       <div class="recommend-content" >
           <swiper :indicator-dots="indicatorDots" :autoplay="autoplay" >
               <block v-for="(item,index) in recommends" :key="index">
@@ -10,7 +10,7 @@
           </swiper>
           <div class="recommend-list">
             <h1 class="list-title">热门歌单推荐</h1>
-            <scroll-view scroll-y style="height: 200px;" :scrolltoupper="upper" :scrolltolower="lower" :scroll="scroll">
+            <!-- <scroll-view scroll-y style="height: 200px;" :scrolltoupper="upper" :scrolltolower="lower" :scroll="scroll"> -->
               <view @click="selectItem(item)" v-for="(item,index) in discList" :key="index" class="item">
                 <div class="icon">
                   <img :src="item.imgurl">
@@ -20,13 +20,13 @@
                   <p class="desc" v-html="item.dissname"></p>
                 </div>
               </view>
-            </scroll-view>
+            <!-- </scroll-view> -->
           </div>
       </div>
       <div class="loading-container" v-if="!discList.length">
         <!-- <loading></loading> -->
       </div>
-    </div>
+    </scroll-view>
 </template>
 
 <script type="text/ecmascript-6">
@@ -66,10 +66,11 @@ export default {
       }
     },
     selectItem (item) {
-      this.$router.push({
-        path: `/recommend/${item.dissid}`
-      })
+      console.log(item)
       this.setDisc(item)
+      wx.navigateTo({
+        url: '/pages/disc/main'
+      })
     },
     _getRecommend () {
       getRecommend()
@@ -111,12 +112,13 @@ export default {
 .recommend {
   // position: fixed;
   width: 100%;
+  height:100%;
   // top: 88px;
   // bottom: 0;
 
   .recommend-content {
     height: 100%;
-    overflow: hidden;
+    // overflow: hidden;
 
     .slide-image {
       width: 100%;

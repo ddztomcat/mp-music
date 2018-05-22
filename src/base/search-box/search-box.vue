@@ -2,7 +2,7 @@
   <div class="search-box">
     <i class="icon-search"></i>
     <input ref="query" v-model="query" class="box" :placeholder="placeholder"/>
-    <i @click="clearSearch" v-if="query" class="icon-dismiss"></i>
+    <i @click="clearSearch" :style="{'z-index':query ? '10' : '-1'}" class="icon-dismiss"></i>
   </div>
 </template>
 
@@ -27,7 +27,7 @@
         this.query = ''
       },
       setQuery (query) {
-        console.log(234)
+        console.log(3)
         this.query = query
       },
       blur () {
@@ -36,7 +36,7 @@
     },
     created () {
       this.$watch('query', debounce((newQuery) => {
-        console.log('ini')
+        console.log(4)
         this.$emit('query', newQuery)
       }, 200))
     }

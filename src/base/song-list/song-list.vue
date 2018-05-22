@@ -1,16 +1,14 @@
 <template>
   <div class="song-list">
-    <ul>
-      <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs">
-        <div class="rank" v-show="rank">
+      <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs" :key='index'>
+        <div class="rank" v-if="rank">
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
         </div>
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
-          <p class="desc">{{getDesc(song)}}</p>
+          <p class="desc">{{song.singer + '·' + song.album}}</p>
         </div>
       </li>
-    </ul>
   </div>
 </template>
 
@@ -27,20 +25,20 @@
       }
     },
     methods: {
-      selectItem(item, index) {
+      selectItem (item, index) {
         this.$emit('select', item, index)
       },
-      getDesc(song) {
+      getDesc (song) {
         return `${song.singer}·${song.album}`
       },
-      getRankCls(index) {
+      getRankCls (index) {
         if (index <= 2) {
           return `icon icon${index}`
         } else {
           return 'text'
         }
       },
-      getRankText(index) {
+      getRankText (index) {
         if (index > 2) {
           return index + 1
         }

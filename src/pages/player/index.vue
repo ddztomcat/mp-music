@@ -63,13 +63,11 @@
                     <i @click="next" class="icon-next"></i>
                 </div>
                 <div class="icon i-right">
-                    <i @click="toggleFavorite(currentSong)" class="icon" :class="'icon-not-favorite'"></i>
+                    <i @click="toggleFavorite(currentSong)" class="icon" :class="iconType"></i>
                 </div>
             </div>
         </div>
     </div>
-    <audio ref="audio" :src="currentSong.url" @play="ready" @error="error" @timeupdate="updateTime"
-           @ended="end"></audio>
 </div>
 </template>
 <script>
@@ -99,6 +97,9 @@ export default {
     }
   },
   computed: {
+    iconType () {
+      return this.getFavoriteIcon(this.currentSong)
+    },
     cdCls () {
       return this.playing ? 'play' : 'play pause'
     },
@@ -129,9 +130,14 @@ export default {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+    this.myAudio.onEnded(() => {
+      console.log('bofang jieshu')
+      this.setPlayingState(false)
+    })
     this.touch = {}
   },
   onUnload () {
+    this.setPlayingState(false)
     this.myAudio.stop()
   },
   methods: {
@@ -314,9 +320,10 @@ export default {
       console.log(newSong, '45645656546546')
       console.log(this.myAudio)
       this.myAudio.src = newSong.url
+      this.savePlayHistory(newSong)
     },
     playing (newPlaying) {
-      console.log(newPlaying)
+      console.log('3334', newPlaying)
       if (newPlaying) {
         this.myAudio.play()
       } else {
@@ -572,10 +579,10 @@ export default {
           position: absolute
           left: 0
           top: 0
-
-//   @keyframes rotate
-//     0%
-//       transform: rotate(0)
-//     100%
-//       transform: rotate(360deg)
+vendors = official
+  @keyframes rotate
+    0%
+      transform: rotate(0)
+    100%
+      transform: rotate(360deg)
 </style>

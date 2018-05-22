@@ -71,6 +71,7 @@ export function loadSearch () {
   let searches = []
   try {
     searches = wx.getStorageSync(SEARCH_KEY) || []
+    // console.log(searches)
   } catch (err) {
 
   }
@@ -96,6 +97,7 @@ export function loadPlay () {
   let songs = []
   try {
     songs = wx.getStorageSync(PLAY_KEY)
+    // console.log(songs)
   } catch (err) {
 
   }

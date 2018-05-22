@@ -7,7 +7,7 @@
                     <view class="section-item-header">
                         {{item.alphabet}}
                     </view>
-                    <view v-for="(cell,cellIndex) in item.datas" :key="cellIndex"  class="section-item-cells">
+                    <view v-for="(cell,cellIndex) in item.datas" :key="cellIndex"  class="section-item-cells" @click="selectSinger(cell)">
                         <view class="section-item-cell" >
                             <img class="avatar" :src="cell.avatar"/>
                             <span class="name">{{cell.name}}</span>
@@ -25,6 +25,7 @@
 </div>
 </template>
 <script>
+import {mapMutations} from 'vuex'
 import {getSingerList} from 'api/singer'
 import {ERR_OK} from 'api/config'
 import Singer from 'common/js/singer'
@@ -66,6 +67,12 @@ export default {
     })
   },
   methods: {
+    selectSinger (singer) {
+      this.setSinger(singer)
+      wx.navigateTo({
+        url: '/pages/singer-detail/main'
+      })
+    },
     _normalizeSinger (list) {
       let map = {
         hot: {
@@ -125,7 +132,10 @@ export default {
           }
         }
       }
-    }
+    },
+    ...mapMutations({
+      setSinger: 'SET_SINGER'
+    })
   }
 }
 </script>

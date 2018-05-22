@@ -14,13 +14,13 @@
         <view :style="{width: stv.windowWidth+ 'px'}" class="one-scene">
             <recommend></recommend>
         </view>
-        <view :style="{width: stv.windowWidth+ 'px'}">
+        <view :style="{width: stv.windowWidth+ 'px'}" class="one-scene">
             <singer></singer>
         </view>
-        <view :style="{width: stv.windowWidth+ 'px'}">
+        <view :style="{width: stv.windowWidth+ 'px'}" class="one-scene">
             <rank></rank>
         </view>
-        <view :style="{width: stv.windowWidth+ 'px'}">
+        <view :style="{width: stv.windowWidth+ 'px'}" class="one-scene">
             <search></search>
         </view>
       </view>
@@ -194,11 +194,13 @@ export default {
 }
 .stv-container .scroll-view .scroll-view-wrapper .one-scene {
   height: 100%;
+  box-sizing:border-box;
+  padding-bottom:20px;
 }
 .one-scene text {
-  display: flex;
-  justify-content: center;
-  padding-top: 200rpx;
+  // display: flex;
+  // justify-content: center;
+  // padding-top: 200rpx;
 }
 </style>
 
