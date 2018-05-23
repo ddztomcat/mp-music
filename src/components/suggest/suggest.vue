@@ -2,7 +2,7 @@
   <scroll-view scroll-y class="suggest-list" @scrolltolower="searchMore">
       <li @click="selectItem(item)" class="suggest-item" v-for="(item,index) in result" :key="index">
         <div class="icon">
-          <i :class="item.type === TYPE_SINGER ? 'icon-mine' : 'icon-music'"></i>
+          <i :class="item.type ? 'icon-mine' : 'icon-music'"></i>
         </div>
         <div class="name">
           <temp-text :answer='item'></temp-text>
@@ -84,8 +84,8 @@
             id: item.singermid,
             name: item.singername
           })
-          this.$router.push({
-            path: `/search/${singer.id}`
+          wx.navigateTo({
+            url: '/pages/singer-detail/main'
           })
           this.setSinger(singer)
         } else {

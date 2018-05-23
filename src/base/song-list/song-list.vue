@@ -2,7 +2,7 @@
   <div class="song-list">
       <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs" :key='index'>
         <div class="rank" v-if="rank">
-          <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
+          <span :class="index < 3 ? 'icon icon' + index : 'text'" v-text="index >=3 ? index+1 : ''"></span>
         </div>
         <div class="content">
           <h2 class="name">{{song.name}}</h2>
@@ -28,20 +28,8 @@
       selectItem (item, index) {
         this.$emit('select', item, index)
       },
-      getDesc (song) {
-        return `${song.singer}·${song.album}`
-      },
-      getRankCls (index) {
-        if (index <= 2) {
-          return `icon icon${index}`
-        } else {
-          return 'text'
-        }
-      },
-      getRankText (index) {
-        if (index > 2) {
-          return index + 1
-        }
+      handleLongTap () {
+        console.log('long tap')
       }
     }
   }

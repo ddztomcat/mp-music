@@ -27,7 +27,7 @@
 
   export default {
     // mixins: [playlistMixin],
-    created () {
+    onLoad () {
       this._getTopList()
     },
     data () {
@@ -43,10 +43,10 @@
         this.$refs.toplist.refresh()
       },
       selectItem (item) {
-        this.$router.push({
-          path: `/rank/${item.id}`
-        })
         this.setTopList(item)
+        wx.navigateTo({
+          url: '/pages/top-list/main'
+        })
       },
       _getTopList () {
         getTopList().then((res) => {

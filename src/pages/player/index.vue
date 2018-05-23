@@ -166,17 +166,19 @@ export default {
       }
     },
     loop () {
-      this.$refs.audio.currentTime = 0
-      this.$refs.audio.play()
+      // this.$refs.audio.currentTime = 0
+      // this.$refs.audio.play()
+      this.myAudio.seek(0)
       this.setPlayingState(true)
-      if (this.currentLyric) {
-        this.currentLyric.seek(0)
-      }
+      // if (this.currentLyric) {
+      //   this.currentLyric.seek(0)
+      // }
     },
     next () {
-      if (!this.songReady) {
-        return
-      }
+      // if (!this.songReady) {
+      //   return
+      // }
+      console.log('next')
       if (this.playlist.length === 1) {
         this.loop()
         return
@@ -190,12 +192,12 @@ export default {
           this.togglePlaying()
         }
       }
-      this.songReady = false
+      // this.songReady = false
     },
     prev () {
-      if (!this.songReady) {
-        return
-      }
+      // if (!this.songReady) {
+      //   return
+      // }
       if (this.playlist.length === 1) {
         this.loop()
         return
@@ -209,7 +211,7 @@ export default {
           this.togglePlaying()
         }
       }
-      this.songReady = false
+      // this.songReady = false
     },
     ready () {
       this.songReady = true
@@ -311,6 +313,7 @@ export default {
   },
   watch: {
     currentSong (newSong, oldSong) {
+      console.log('newSong')
       if (!newSong.id) {
         return
       }
@@ -318,8 +321,8 @@ export default {
         return
       }
       console.log(newSong, '45645656546546')
-      console.log(this.myAudio)
       this.myAudio.src = newSong.url
+      this.myAudio.play()
       this.savePlayHistory(newSong)
     },
     playing (newPlaying) {
