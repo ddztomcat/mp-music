@@ -16,7 +16,7 @@ export default {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#222',
-      navigationBarTitleText: '音乐盒',
+      navigationBarTitleText: '微音乐',
       navigationBarTextStyle: 'white'
     }
   }

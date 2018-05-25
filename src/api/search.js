@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getHotKey () {
-  const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getHotKey'
 
   const data = Object.assign({}, commonParams, {
     uin: 0,
@@ -15,11 +15,7 @@ export function getHotKey () {
       url,
       data,
       success: function (res) {
-        // console.log(res)
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        // console.log(ans)
-        resolve(JSON.parse(ans))
+        resolve(res.data)
       },
       fail: function (err) {
         console.log(err)
@@ -30,7 +26,7 @@ export function getHotKey () {
 }
 
 export function search (query, page, zhida, perpage) {
-  const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+  const url = 'https://www.borrowfriend.xyz/api/getSearch'
 
   const data = Object.assign({}, commonParams, {
     w: query,
@@ -56,9 +52,7 @@ export function search (query, page, zhida, perpage) {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        let last = JSON.parse(ans)
+        let last = res.data
         let _data = handleSongData(last.data.song.list)
         getPicture(_data)
         .then((back) => {
@@ -87,7 +81,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'http://39.106.145.55:23000/api/getPurlUrl'
+  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

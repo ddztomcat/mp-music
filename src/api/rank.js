@@ -2,7 +2,7 @@
 import {commonParams, Params} from './config'
 
 export function getTopList () {
-  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getTopList'
 
   const data = Object.assign({}, commonParams, {
     uin: 0,
@@ -16,9 +16,14 @@ export function getTopList () {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        resolve(JSON.parse(ans))
+        let ans = res.data
+        if (typeof ans === 'string') {
+          ans = ans.replace(/_callBack\((.*)/, '$1')
+          ans = ans.replace(/\)$/, '')
+          resolve(JSON.parse(ans))
+        } else {
+          resolve(ans)
+        }
       },
       fail: function (err) {
         console.log(err)
@@ -29,7 +34,7 @@ export function getTopList () {
 }
 
 export function getMusicList (topid) {
-  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getMusicList'
 
   const data = Object.assign({}, commonParams, {
     topid,
@@ -47,9 +52,13 @@ export function getMusicList (topid) {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        let last = JSON.parse(ans)
+        let ans = res.data
+        if (typeof ans === 'string') {
+          ans = ans.replace(/_callBack\((.*)/, '$1')
+          ans = ans.replace(/\)$/, '')
+          ans = JSON.parse(ans)
+        }
+        let last = ans
         let _data = handleSongData(last.songlist)
         getPicture(_data)
         .then((back) => {
@@ -78,7 +87,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'http://39.106.145.55:23000/api/getPurlUrl'
+  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

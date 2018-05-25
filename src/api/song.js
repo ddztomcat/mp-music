@@ -1,7 +1,7 @@
 import {commonParams} from './config'
 
 export function getLyric (mid) {
-  const url = '/api/lyric'
+  const url = 'https://www.borrowfriend.xyz/api/lyric'
 
   const data = Object.assign({}, commonParams, {
     songmid: mid,
@@ -17,9 +17,7 @@ export function getLyric (mid) {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        resolve(JSON.parse(ans))
+        resolve(res.data)
       },
       fail: function (err) {
         console.log(err)

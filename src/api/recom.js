@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getRecommend () {
-  const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getRecommend'
 
   const data = Object.assign({}, commonParams, {
     platform: 'h5',
@@ -15,8 +15,12 @@ export function getRecommend () {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)\)\s*$/, '$1')
-        resolve(JSON.parse(ans))
+        let ans = res.data
+        if (typeof ans === 'string') {
+          ans = ans.replace(/_callBack\((.*)\)\s*$/, '$1')
+          ans = JSON.parse(ans)
+        }
+        resolve(ans)
       },
       fail: function (err) {
         console.log(err)
@@ -27,7 +31,7 @@ export function getRecommend () {
 }
 
 export function getDiscList () {
-  const url = 'http://39.106.145.55:23000/api/getDiscList'
+  const url = 'https://www.borrowfriend.xyz/api/getDiscList'
 
   const data = Object.assign({}, commonParams, {
     platform: 'yqq',
@@ -55,7 +59,7 @@ export function getDiscList () {
   })
 }
 export function getSongList (disstid) {
-  const url = 'http://ustbhuangyi.com/music/api/getCdInfo'
+  const url = 'https://www.borrowfriend.xyz/api/getSongList'
 
   const data = Object.assign({}, commonParams, {
     disstid,
@@ -100,7 +104,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'http://39.106.145.55:23000/api/getPurlUrl'
+  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

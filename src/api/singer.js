@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getSingerList () {
-  const url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getSingerList'
 
   const data = Object.assign({}, commonParams, {
     channel: 'singer',
@@ -20,9 +20,7 @@ export function getSingerList () {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        resolve(JSON.parse(ans))
+        resolve(res.data)
       },
       fail: function (err) {
         console.log(err)
@@ -33,7 +31,7 @@ export function getSingerList () {
 }
 
 export function getSingerDetail (singerId) {
-  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
+  const url = 'https://www.borrowfriend.xyz/api/getSingerDetail'
 
   const data = Object.assign({}, commonParams, {
     hostUin: 0,
@@ -52,9 +50,7 @@ export function getSingerDetail (singerId) {
       url,
       data,
       success: function (res) {
-        let ans = res.data.replace(/_callBack\((.*)/, '$1')
-        ans = ans.replace(/\)$/, '')
-        let last = JSON.parse(ans)
+        let last = res.data
         let _data = handleSongData(last.data.list)
         getPicture(_data)
         .then((back) => {
@@ -83,7 +79,7 @@ function handleSongData (arr) {
 }
 
 export function getPicture (ans) {
-  const url = 'http://39.106.145.55:23000/api/getPurlUrl'
+  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

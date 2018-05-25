@@ -60,7 +60,141 @@ apiRoutes.get('/lyric', function (req, res) {
   })
 })
 
+apiRoutes.get('/getTopList', function (req, res) {
+  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ret = response.data
+    if (typeof ret === 'string') {
+      ret = ret.replace(/_callBack\((.*)/, '$1')
+      ret = ret.replace(/\)$/, '')
+      ret = JSON.parse(ret)
+    }
+    res.json(ret)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getMusicList', function (req, res) {
+  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)/, '$1')
+      ans = ans.replace(/\)$/, '')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getRecommend', function (req, res) {
+  const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)\)\s*$/, '$1')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getSongList', function (req, res) {
+  const url = 'http://ustbhuangyi.com/music/api/getCdInfo'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)\)\s*$/, '$1')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getHotKey', function (req, res) {
+  const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)/, '$1')
+      ans = ans.replace(/\)$/, '')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getSearch', function (req, res) {
+  const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)/, '$1')
+      ans = ans.replace(/\)$/, '')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getSingerList', function (req, res) {
+  const url = 'https://c.y.qq.com/v8/fcg-bin/v8.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)/, '$1')
+      ans = ans.replace(/\)$/, '')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
+apiRoutes.get('/getSingerDetail', function (req, res) {
+  const url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
+  axios.get(url, {
+    params: req.query
+  }).then((response) => {
+    var ans = response.data
+    if (typeof ans === 'string') {
+      ans = ans.replace(/_callBack\((.*)/, '$1')
+      ans = ans.replace(/\)$/, '')
+      ans = JSON.parse(ans)
+    }
+    res.json(ans)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
+
 app.use('/api', apiRoutes)
-app.listen(3000, function () {
+app.listen(23000, function () {
   console.log('server start...')
 })
