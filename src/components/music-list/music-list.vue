@@ -100,6 +100,9 @@
         this.randomPlay({
           list: this.songs
         })
+        wx.navigateTo({
+          url: '/pages/player/main'
+        })
       },
       ...mapActions([
         'selectPlay',

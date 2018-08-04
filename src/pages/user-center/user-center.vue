@@ -103,6 +103,9 @@
         this.randomPlay({
           list
         })
+        wx.navigateTo({
+          url: '/pages/player/main'
+        })
       },
       ...mapActions([
         'insertSong',

@@ -12,6 +12,7 @@
   export default {
     methods: {
       handleClick () {
+        console.log(34)
         wx.navigateTo({
           url: '/pages/user-center/main'
         })

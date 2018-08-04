@@ -196,5 +196,5 @@ apiRoutes.get('/getSingerDetail', function (req, res) {
 
 app.use('/api', apiRoutes)
 app.listen(23000, function () {
-  console.log('server start...')
+  console.log('server start 23000...')
 })

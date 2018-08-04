@@ -12,60 +12,58 @@
             <h2 class="subtitle" v-html="currentSong.singer"></h2>
         </div>
         <div class="middle"
-                @touchstart.prevent="middleTouchStart"
-                @touchmove.prevent="middleTouchMove"
+                @touchstart="middleTouchStart"
+                @touchmove="middleTouchMove"
                 @touchend="middleTouchEnd"
         >
-            <div class="middle-l" ref="middleL">
-            <div class="cd-wrapper" ref="cdWrapper">
-                <div class="cd" :class="cdCls">
-                <img class="image" :src="currentSong.image">
-                </div>
+            <div class="middle-l" ref="middleL" :style="{'transition-duration':'300ms',opacity:showLeft ? '1' : '0'}">
+              <div class="cd-wrapper" ref="cdWrapper">
+                  <div class="cd" :class="cdCls">
+                  <img class="image" :src="currentSong.image">
+                  </div>
+              </div>
+              <div class="playing-lyric-wrapper">
+                  <div class="playing-lyric">{{playingLyric}}</div>
+              </div>
             </div>
-            <div class="playing-lyric-wrapper">
-                <div class="playing-lyric">{{playingLyric}}</div>
-            </div>
-            </div>
-            <scroll class="middle-r" ref="lyricList" :data="currentLyric && currentLyric.lines">
-            <div class="lyric-wrapper">
-                <div v-if="currentLyric">
-                <p ref="lyricLine"
-                    class="text"
-                    :class="{'current': currentLineNum ===index}"
-                    v-for="(line,index) in currentLyric.lines" :key="index">{{line.txt}}</p>
-                </div>
-            </div>
-            </scroll>
+            <scroll-view class="middle-r"  :scroll-into-view="toView" scroll-y ref="lyricList" v-if="currentLyric" :style="{'transition-duration':'300ms',transform:showLeft ? 'translateX(0)' : 'translateX(' + pWith + ')'}">
+              <div class="lyric-wrapper">
+                    <p ref="lyricLine"
+                        class="text"
+                        :class="{'current': currentLineNum ===index}"
+                        v-for="(line,index) in currentLyric.lines" :key="index" :id="'text' + index">{{line.txt}}</p>
+              </div>
+            </scroll-view>
         </div>
         <div class="bottom">
             <div class="dot-wrapper">
-            <span class="dot" :class="{'active':currentShow==='cd'}"></span>
-            <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
+              <span class="dot" :class="{'active':currentShow==='cd'}"></span>
+              <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
             </div>
             <div class="progress-wrapper">
-            <span class="time time-l">{{format(currentTime)}}</span>
-            <div class="progress-bar-wrapper">
-                <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
-            </div>
-            <span class="time time-r">{{format(currentSong.duration)}}</span>
-            </div>
-                <div class="operators">
-                <div class="icon i-left" @click="changeMode">
-                    <i :class="iconMode"></i>
-                </div>
-                <div class="icon i-left">
-                    <i @click="prev" class="icon-prev"></i>
-                </div>
-                <div class="icon i-center">
-                    <i @click="togglePlaying" :class="playIcon"></i>
-                </div>
-                <div class="icon i-right">
-                    <i @click="next" class="icon-next"></i>
-                </div>
-                <div class="icon i-right">
-                    <i @click="toggleFavorite(currentSong)" class="icon" :class="iconType"></i>
-                </div>
-            </div>
+              <span class="time time-l">{{format(currentTime)}}</span>
+              <div class="progress-bar-wrapper">
+                  <progress-bar :percent="percent" @percentChange="onProgressBarChange"></progress-bar>
+              </div>
+              <span class="time time-r">{{format(currentSong.duration)}}</span>
+              </div>
+                  <div class="operators">
+                  <div class="icon i-left" @click="changeMode">
+                      <i :class="iconMode"></i>
+                  </div>
+                  <div class="icon i-left">
+                      <i @click="prev" class="icon-prev"></i>
+                  </div>
+                  <div class="icon i-center">
+                      <i @click="togglePlaying" :class="playIcon"></i>
+                  </div>
+                  <div class="icon i-right">
+                      <i @click="next" class="icon-next"></i>
+                  </div>
+                  <div class="icon i-right">
+                      <i @click="toggleFavorite(currentSong)" class="icon" :class="iconType"></i>
+                  </div>
+              </div>
         </div>
     </div>
 </div>
@@ -75,7 +73,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 // import ProgressBar from 'base/progress-bar/progress-bar'
 // import ProgressCircle from 'base/progress-circle/progress-circle'
 import {playMode} from 'common/js/config'
-// import Lyric from 'lyric-parser'
+import Lyric from 'lyric-parser'
 import {playerMixin} from 'common/js/mixin'
 // import Playlist from 'components/playlist/playlist'
 export default {
@@ -87,6 +85,9 @@ export default {
   },
   data () {
     return {
+      toView: '',
+      pWith: 0,
+      showLeft: true,
       songReady: false,
       currentTime: 0,
       radius: 32,
@@ -122,6 +123,13 @@ export default {
     ])
   },
   created () {
+    try {
+      var res = wx.getSystemInfoSync()
+      this.pWith = '-' + res.windowWidth + 'px'
+      console.log(this.pWith)
+    } catch (e) {
+  // Do something when catch error
+    }
     this.myAudio = wx.createInnerAudioContext()
     this.myAudio.onPlay(() => {
       console.log('kaishi bofang')
@@ -133,6 +141,7 @@ export default {
     this.myAudio.onEnded(() => {
       console.log('bofang jieshu')
       this.setPlayingState(false)
+      this.end()
     })
     this.touch = {}
   },
@@ -154,9 +163,9 @@ export default {
     //   }
       console.log('toggglePlaying')
       this.setPlayingState(!this.playing)
-    //   if (this.currentLyric) {
-    //     this.currentLyric.togglePlay()
-    //   }
+      if (this.currentLyric) {
+        this.currentLyric.togglePlay()
+      }
     },
     end () {
       if (this.mode === playMode.loop) {
@@ -170,9 +179,9 @@ export default {
       // this.$refs.audio.play()
       this.myAudio.seek(0)
       this.setPlayingState(true)
-      // if (this.currentLyric) {
-      //   this.currentLyric.seek(0)
-      // }
+      if (this.currentLyric) {
+        this.currentLyric.seek(0)
+      }
     },
     next () {
       // if (!this.songReady) {
@@ -244,7 +253,8 @@ export default {
         if (this.currentSong.lyric !== lyric) {
           return
         }
-        // this.currentLyric = new Lyric(lyric, this.handleLyric)
+        this.currentLyric = new Lyric(lyric, this.handleLyric)
+        console.log(this.currentLyric)
         if (this.playing) {
           this.currentLyric.play()
         }
@@ -257,10 +267,7 @@ export default {
     handleLyric ({lineNum, txt}) {
       this.currentLineNum = lineNum
       if (lineNum > 5) {
-        let lineEl = this.$refs.lyricLine[lineNum - 5]
-        this.$refs.lyricList.scrollToElement(lineEl, 1000)
-      } else {
-        this.$refs.lyricList.scrollTo(0, 0, 1000)
+        this.toView = 'text' + (lineNum - 5)
       }
       this.playingLyric = txt
     },
@@ -274,12 +281,15 @@ export default {
       const touch = e.touches[0]
       this.touch.startX = touch.pageX
       this.touch.startY = touch.pageY
+      console.log('start')
     },
     middleTouchMove (e) {
 
     },
     middleTouchEnd () {
-
+      this.showLeft = !this.showLeft
+      this.currentShow = this.currentShow === 'cd' ? 'lyric' : 'cd'
+      console.log('end')
     },
     _pad (num, n = 2) {
       let len = num.toString().length
@@ -311,6 +321,9 @@ export default {
       'savePlayHistory'
     ])
   },
+  destroyed () {
+    this.myAudio.destroy()
+  },
   watch: {
     currentSong (newSong, oldSong) {
       console.log('newSong')
@@ -322,7 +335,17 @@ export default {
       }
       console.log(newSong, '45645656546546')
       this.myAudio.src = newSong.url
-      this.myAudio.play()
+      if (this.currentLyric) {
+        this.currentLyric.stop()
+        this.currentTime = 0
+        this.playingLyric = ''
+        this.currentLineNum = 0
+      }
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        this.myAudio.play()
+        this.getLyric()
+      }, 1000)
       this.savePlayHistory(newSong)
     },
     playing (newPlaying) {

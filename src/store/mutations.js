@@ -13,6 +13,7 @@ const mutations = {
   },
   [types.SET_PLAYLIST] (state, list) {
     state.playlist = list
+    console.log(list)
   },
   [types.SET_SEQUENCE_LIST] (state, list) {
     state.sequenceList = list

@@ -21,13 +21,13 @@
         default: 0
       }
     },
-    data() {
+    data () {
       return {
         dashArray: Math.PI * 100
       }
     },
     computed: {
-      dashOffset() {
+      dashOffset () {
         return (1 - this.percent) * this.dashArray
       }
     }
