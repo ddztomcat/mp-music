@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getRecommend () {
-  const url = 'https://www.borrowfriend.xyz/api/getRecommend'
+  const url = 'https://music.borrowfriend.xyz/api/getRecommend'
 
   const data = Object.assign({}, commonParams, {
     platform: 'h5',
@@ -31,7 +31,7 @@ export function getRecommend () {
 }
 
 export function getDiscList () {
-  const url = 'https://www.borrowfriend.xyz/api/getDiscList'
+  const url = 'https://music.borrowfriend.xyz/api/getDiscList'
 
   const data = Object.assign({}, commonParams, {
     platform: 'yqq',
@@ -59,7 +59,7 @@ export function getDiscList () {
   })
 }
 export function getSongList (disstid) {
-  const url = 'https://www.borrowfriend.xyz/api/getSongList'
+  const url = 'https://music.borrowfriend.xyz/api/getSongList'
 
   const data = Object.assign({}, commonParams, {
     disstid,
@@ -104,7 +104,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
+  const url = 'https://music.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

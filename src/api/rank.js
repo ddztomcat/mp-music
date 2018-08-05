@@ -2,7 +2,7 @@
 import {commonParams, Params} from './config'
 
 export function getTopList () {
-  const url = 'https://www.borrowfriend.xyz/api/getTopList'
+  const url = 'https://music.borrowfriend.xyz/api/getTopList'
 
   const data = Object.assign({}, commonParams, {
     uin: 0,
@@ -34,7 +34,7 @@ export function getTopList () {
 }
 
 export function getMusicList (topid) {
-  const url = 'https://www.borrowfriend.xyz/api/getMusicList'
+  const url = 'https://music.borrowfriend.xyz/api/getMusicList'
 
   const data = Object.assign({}, commonParams, {
     topid,
@@ -87,7 +87,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
+  const url = 'https://music.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

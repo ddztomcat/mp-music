@@ -1,7 +1,7 @@
 import {commonParams} from './config'
 
 export function getLyric (mid) {
-  const url = 'https://www.borrowfriend.xyz/api/lyric'
+  const url = 'https://music.borrowfriend.xyz/api/lyric'
 
   const data = Object.assign({}, commonParams, {
     songmid: mid,

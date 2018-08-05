@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getHotKey () {
-  const url = 'https://www.borrowfriend.xyz/api/getHotKey'
+  const url = 'https://music.borrowfriend.xyz/api/getHotKey'
 
   const data = Object.assign({}, commonParams, {
     uin: 0,
@@ -26,7 +26,7 @@ export function getHotKey () {
 }
 
 export function search (query, page, zhida, perpage) {
-  const url = 'https://www.borrowfriend.xyz/api/getSearch'
+  const url = 'https://music.borrowfriend.xyz/api/getSearch'
 
   const data = Object.assign({}, commonParams, {
     w: query,
@@ -81,7 +81,7 @@ function handleSongData (arr) {
   }
 }
 export function getPicture (ans) {
-  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
+  const url = 'https://music.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {

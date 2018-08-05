@@ -1,7 +1,7 @@
 import {commonParams, Params} from './config'
 
 export function getSingerList () {
-  const url = 'https://www.borrowfriend.xyz/api/getSingerList'
+  const url = 'https://music.borrowfriend.xyz/api/getSingerList'
 
   const data = Object.assign({}, commonParams, {
     channel: 'singer',
@@ -31,7 +31,7 @@ export function getSingerList () {
 }
 
 export function getSingerDetail (singerId) {
-  const url = 'https://www.borrowfriend.xyz/api/getSingerDetail'
+  const url = 'https://music.borrowfriend.xyz/api/getSingerDetail'
 
   const data = Object.assign({}, commonParams, {
     hostUin: 0,
@@ -79,7 +79,7 @@ function handleSongData (arr) {
 }
 
 export function getPicture (ans) {
-  const url = 'https://www.borrowfriend.xyz/api/getPurlUrl'
+  const url = 'https://music.borrowfriend.xyz/api/getPurlUrl'
   let data = Object.assign({}, Params)
   Object.assign(data.url_mid.param, ans)
   return new Promise(function (resolve, reject) {
